@@ -41,6 +41,19 @@ android {
 
 dependencies {
 
+    // ViewModel + lifecycle
+    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.9.0")
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.9.0")
+    // Retrofit
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+
+    // Navigation Compose
+    implementation("androidx.navigation:navigation-compose:2.9.0")
+
+    // Coil
+    implementation("io.coil-kt:coil-compose:2.5.0")
+
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
