@@ -1,23 +1,27 @@
 package com.jaennova.dishcovery.repository
 
-import com.jaennova.dishcovery.api.RetrofitClient
+import com.jaennova.dishcovery.api.MealService
 import com.jaennova.dishcovery.database.RecipeDao
 import com.jaennova.dishcovery.model.Recipe
 import com.jaennova.dishcovery.model.toFavoriteRecipe
 import com.jaennova.dishcovery.model.toRecipe
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import javax.inject.Inject
 
-class RecipeRepository(private val recipeDao: RecipeDao) {
+class RecipeRepository @Inject constructor(
+    private val mealService: MealService,
+    private val recipeDao: RecipeDao
+) {
 
     // API calls
     suspend fun searchRecipes(query: String): List<Recipe> {
-        val response = RetrofitClient.mealService.searchMeals(query)
+        val response = mealService.searchMeals(query)
         return response.meals ?: emptyList()
     }
 
     suspend fun getRecipeDetails(id: String): Recipe? {
-        val response = RetrofitClient.mealService.getMealById(id)
+        val response = mealService.getMealById(id)
         return response.meals?.firstOrNull()
     }
 

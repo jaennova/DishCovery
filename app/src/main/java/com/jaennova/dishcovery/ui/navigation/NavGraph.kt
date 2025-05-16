@@ -1,7 +1,8 @@
-package com.example.recipesapp.ui
+package com.jaennova.dishcovery.ui.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
@@ -21,13 +22,14 @@ sealed class Screen(val route: String) {
 }
 
 @Composable
-fun RecipesNavGraph(navController: NavHostController, viewModel: RecipeViewModel) {
+fun NavGraph(navController: NavHostController) {
     NavHost(
         navController = navController,
         startDestination = Screen.Search.route
     ) {
         composable(Screen.Search.route) {
-            RecipeScreen (
+            val viewModel: RecipeViewModel = hiltViewModel()
+            RecipeScreen(
                 viewModel = viewModel,
                 onRecipeClick = { recipeId ->
                     navController.navigate(Screen.RecipeDetail.createRoute(recipeId))
@@ -39,6 +41,7 @@ fun RecipesNavGraph(navController: NavHostController, viewModel: RecipeViewModel
         }
 
         composable(Screen.Favorites.route) {
+            val viewModel: RecipeViewModel = hiltViewModel()
             FavoritesScreen(
                 viewModel = viewModel,
                 onRecipeClick = { recipeId ->
@@ -57,6 +60,7 @@ fun RecipesNavGraph(navController: NavHostController, viewModel: RecipeViewModel
             )
         ) { entry ->
             val recipeId = entry.arguments?.getString("recipeId") ?: ""
+            val viewModel: RecipeViewModel = hiltViewModel()
 
             LaunchedEffect(recipeId) {
                 viewModel.getRecipeDetails(recipeId)
