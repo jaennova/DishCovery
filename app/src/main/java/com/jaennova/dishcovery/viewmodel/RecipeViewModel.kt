@@ -1,20 +1,21 @@
 package com.jaennova.dishcovery.viewmodel
 
-import android.app.Application
-import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.jaennova.dishcovery.database.RecipeDatabase
 import com.jaennova.dishcovery.model.Recipe
 import com.jaennova.dishcovery.repository.RecipeRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class RecipeViewModel(application: Application) : AndroidViewModel(application) {
-
+@HiltViewModel
+class RecipeViewModel @Inject constructor(
     private val repository: RecipeRepository
+) : ViewModel() {
 
     private val _searchQuery = MutableStateFlow("")
     val searchQuery = _searchQuery.asStateFlow()
@@ -38,9 +39,6 @@ class RecipeViewModel(application: Application) : AndroidViewModel(application) 
     val isFavorite: StateFlow<Boolean> = _isFavorite.asStateFlow()
 
     init {
-        val dao = RecipeDatabase.getDatabase(application).recipeDao()
-        repository = RecipeRepository(dao)
-
         viewModelScope.launch {
             repository.getAllFavorites().collectLatest {
                 _favorites.value = it
