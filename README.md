@@ -14,13 +14,13 @@ El proyecto se encuentra en desarrollo activo, implementándose en fases secuenc
    - Manejo de respuestas HTTP
    - Conversión de JSON a objetos Kotlin
 
-2. **Fase Room** *(En Progreso)*
+2. **Fase Room** *(Completada)*
    - Base de datos local para recetas favoritas
    - Entidades y DAOs
    - Operaciones CRUD
    - Persistencia de datos offline
 
-3. **Fase Hilt** *(Planificada)*
+3. **Fase Hilt** *(Complentada)*
    - Inyección de dependencias
    - Módulos de base de datos
    - Módulos de red
